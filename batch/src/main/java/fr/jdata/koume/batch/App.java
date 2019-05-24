@@ -14,8 +14,14 @@ import org.apache.commons.csv.CSVRecord;
 public class App {
 
 	public static void main(String[] args) throws IOException {
-		
-		Reader in = new FileReader("C:\\Users\\Samantha\\Desktop\\Plan_koume.csv");
+		// Validation de l'entrée
+		if (args.length == 0) {
+			System.out.println("Aucun fichier renseigné");
+			return;
+		}
+
+		// Lecture du fichier
+		Reader in = new FileReader(args[0]);
 		Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
 
 		for (CSVRecord record : records) {
