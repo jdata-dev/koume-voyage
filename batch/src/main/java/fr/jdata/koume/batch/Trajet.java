@@ -1,36 +1,21 @@
 package fr.jdata.koume.batch;
 
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.Id;
 
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-
-@Document(collection = "PlanTransport")
 
 public class Trajet {
 	
-	@Indexed(unique = true)
-    @Field(value = "numTrajet")
+	
+	@Id
+	public String id;
+	
 	private int numTrajet;
-	
-	
-	@Field(value = "numBus")
 	private int numBus;
-	
-	@Field(value = "origine")
 	private String origine;
-	
-	@Field(value = "destination")
 	private String destination;
-	
-	@Field(value = "departureDateTime")
 	private LocalDateTime departureDateTime;
-	
-	@Field(value = "arrivalDateTime")
 	private LocalDateTime arrivalDateTime;
-	
-	@Field(value = "capacite")
 	private int capacite;
 	
 
@@ -107,7 +92,7 @@ public class Trajet {
 
 	@Override
 	public String toString() {
-		return "Trajet [numTrajet=" + numTrajet + ", numBus=" + numBus + ", origine=" + origine + ", destination="
+		return id+"Trajet [numTrajet=" + numTrajet + ", numBus=" + numBus + ", origine=" + origine + ", destination="
 				+ destination + ", departureDateTime=" + departureDateTime + ", arrivalDateTime=" + arrivalDateTime
 				+ ", capacite=" + capacite+ "]";
 	}
