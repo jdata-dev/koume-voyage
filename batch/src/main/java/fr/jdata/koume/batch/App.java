@@ -11,6 +11,10 @@ import java.time.LocalTime;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+
 public class App {
 
 	public static void main(String[] args) throws IOException {
@@ -33,17 +37,21 @@ public class App {
 			String heureArrivee = record.get("heure_arrivee");
 			String dateDepart = record.get("date_depart");
 			String dateArrivee = record.get("date_arrivee");
-			String prix = record.get("prix");
 			String capacite = record.get("capacite_bus");
-			String arretInterm = record.get("arret_interm");
 
 			Trajet t1 = new Trajet(Integer.valueOf(numTrajet), Integer.valueOf(numBus), origine, destination,
 					LocalDateTime.of(convertDate(dateDepart), convertTime(heureDepart)),
-					LocalDateTime.of(convertDate(dateArrivee), convertTime(heureArrivee)), Double.valueOf(prix),
-					Integer.valueOf(capacite), arretInterm);
+					LocalDateTime.of(convertDate(dateArrivee), convertTime(heureArrivee)),
+					Integer.valueOf(capacite));
 
 			System.out.println(t1.toString());
 		}
+		
+		// Création de la connexion à MongoDB
+		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
+		                        
+		// Notre base de données
+		DB db = mongoClient.getDB("db1");
 	}
 
 	private static LocalDate convertDate(String date) {

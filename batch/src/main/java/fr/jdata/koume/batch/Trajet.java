@@ -2,22 +2,40 @@ package fr.jdata.koume.batch;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Document(collection = "PlanTransport")
+
 public class Trajet {
 	
+	@Indexed(unique = true)
+    @Field(value = "numTrajet")
 	private int numTrajet;
-	private int numBus;
-	private String origine;
-	private String destination;
-	private LocalDateTime departureDateTime;
-	private LocalDateTime arrivalDateTime;
-	private double prix;
-	private int capacite;
-	private String arretInterm;
 	
+	
+	@Field(value = "numBus")
+	private int numBus;
+	
+	@Field(value = "origine")
+	private String origine;
+	
+	@Field(value = "destination")
+	private String destination;
+	
+	@Field(value = "departureDateTime")
+	private LocalDateTime departureDateTime;
+	
+	@Field(value = "arrivalDateTime")
+	private LocalDateTime arrivalDateTime;
+	
+	@Field(value = "capacite")
+	private int capacite;
 	
 
 	public Trajet(int numTrajet, int numBus, String origine, String destination, LocalDateTime departureDateTime,
-			LocalDateTime arrivalDateTime, double prix, int capacite, String arretInterm) {
+			LocalDateTime arrivalDateTime, int capacite) {
 		super();
 		this.numTrajet = numTrajet;
 		this.numBus = numBus;
@@ -25,9 +43,7 @@ public class Trajet {
 		this.destination = destination;
 		this.departureDateTime = departureDateTime;
 		this.arrivalDateTime = arrivalDateTime;
-		this.prix = prix;
 		this.capacite = capacite;
-		this.arretInterm = arretInterm;
 	}
 
 	public int getNumTrajet() {
@@ -80,14 +96,6 @@ public class Trajet {
 		this.arrivalDateTime = arrivalDateTime;
 	}
 
-	public double getPrix() {
-		return prix;
-	}
-
-	public void setPrix(double prix) {
-		this.prix = prix;
-	}
-
 	public int getCapacite() {
 		return capacite;
 	}
@@ -96,20 +104,14 @@ public class Trajet {
 		this.capacite = capacite;
 	}
 
-	public String getArretInterm() {
-		return arretInterm;
-	}
-
-	public void setArretInterm(String arretInterm) {
-		this.arretInterm = arretInterm;
-	}
 
 	@Override
 	public String toString() {
 		return "Trajet [numTrajet=" + numTrajet + ", numBus=" + numBus + ", origine=" + origine + ", destination="
 				+ destination + ", departureDateTime=" + departureDateTime + ", arrivalDateTime=" + arrivalDateTime
-				+ ", prix=" + prix + ", capacite=" + capacite + ", arretInterm=" + arretInterm + "]";
+				+ ", capacite=" + capacite+ "]";
 	}
+	
 
 	
 
