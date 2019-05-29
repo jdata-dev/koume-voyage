@@ -1,21 +1,25 @@
 package fr.jdata.koume.batch;
 
-//import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.time.LocalDate;
-//import java.time.LocalDateTime;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
-import com.mongodb.DB;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-public class App {
+@SpringBootApplication
+
+public class App implements CommandLineRunner {
+
+	@Autowired
+	private TravelRepository repository;
 
 	public static void main(String[] args) throws IOException {
 		// Validation de l'entrée
@@ -47,11 +51,6 @@ public class App {
 			System.out.println(t1.toString());
 		}
 		
-		// Création de la connexion à MongoDB
-		MongoClient mongoClient = new MongoClient(new MongoClientURI("mongodb://localhost:27017"));
-		                        
-		// Notre base de données
-		DB db = mongoClient.getDB("db1");
 	}
 
 	private static LocalDate convertDate(String date) {
@@ -62,6 +61,21 @@ public class App {
 	private static LocalTime convertTime(String time) {
 		LocalTime tm = LocalTime.parse(time);
 		return tm;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		repository.deleteAll();
+
+		// save a travel
+		repository.save(new Trajet(0, 0, null, null, null, null, 0));
+
+		// fetch all customers
+		System.out.println("travel found with findAll():");
+		System.out.println("-------------------------------");
+		for (Trajet trajet : repository.findAll()) {
+			System.out.println(trajet);
+		}
 	}
 
 }
