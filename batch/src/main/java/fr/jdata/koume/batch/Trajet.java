@@ -16,11 +16,10 @@ public class Trajet {
 	private String destination;
 	private LocalDateTime departureDateTime;
 	private LocalDateTime arrivalDateTime;
-	private int capacite;
 	
 
 	public Trajet(int numTrajet, int numBus, String origine, String destination, LocalDateTime departureDateTime,
-			LocalDateTime arrivalDateTime, int capacite) {
+			LocalDateTime arrivalDateTime) {
 		super();
 		this.numTrajet = numTrajet;
 		this.numBus = numBus;
@@ -28,7 +27,6 @@ public class Trajet {
 		this.destination = destination;
 		this.departureDateTime = departureDateTime;
 		this.arrivalDateTime = arrivalDateTime;
-		this.capacite = capacite;
 	}
 
 	public int getNumTrajet() {
@@ -80,21 +78,12 @@ public class Trajet {
 	public void setArrivalDateTime(LocalDateTime arrivalDateTime) {
 		this.arrivalDateTime = arrivalDateTime;
 	}
-
-	public int getCapacite() {
-		return capacite;
-	}
-
-	public void setCapacite(int capacite) {
-		this.capacite = capacite;
-	}
-
-
+	
 	@Override
 	public String toString() {
 		return id+"Trajet [numTrajet=" + numTrajet + ", numBus=" + numBus + ", origine=" + origine + ", destination="
 				+ destination + ", departureDateTime=" + departureDateTime + ", arrivalDateTime=" + arrivalDateTime
-				+ ", capacite=" + capacite+ "]";
+				+ "]";
 	}
 	
 

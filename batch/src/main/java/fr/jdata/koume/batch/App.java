@@ -15,13 +15,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-
 public class App implements CommandLineRunner {
 
 	@Autowired
 	private TravelRepository repository;
 
 	public static void main(String[] args) throws IOException {
+		SpringApplication.run(App.class, args);
+	}
+
+	public void run(String... args) throws Exception {
+
 		// Validation de l'entrée
 		if (args.length == 0) {
 			System.out.println("Aucun fichier renseigné");
@@ -41,16 +45,15 @@ public class App implements CommandLineRunner {
 			String heureArrivee = record.get("heure_arrivee");
 			String dateDepart = record.get("date_depart");
 			String dateArrivee = record.get("date_arrivee");
-			String capacite = record.get("capacite_bus");
+			// String capacite = record.get("capacite_bus");
 
-			Trajet t1 = new Trajet(Integer.valueOf(numTrajet), Integer.valueOf(numBus), origine, destination,
+			Trajet trajet = new Trajet(Integer.valueOf(numTrajet), Integer.valueOf(numBus), origine, destination,
 					LocalDateTime.of(convertDate(dateDepart), convertTime(heureDepart)),
-					LocalDateTime.of(convertDate(dateArrivee), convertTime(heureArrivee)),
-					Integer.valueOf(capacite));
+					LocalDateTime.of(convertDate(dateArrivee), convertTime(heureArrivee)));
 
-			System.out.println(t1.toString());
+			repository.save(trajet);
+			System.out.println(trajet.toString());
 		}
-		
 	}
 
 	private static LocalDate convertDate(String date) {
@@ -62,20 +65,4 @@ public class App implements CommandLineRunner {
 		LocalTime tm = LocalTime.parse(time);
 		return tm;
 	}
-
-	@Override
-	public void run(String... args) throws Exception {
-		repository.deleteAll();
-
-		// save a travel
-		repository.save(new Trajet(0, 0, null, null, null, null, 0));
-
-		// fetch all customers
-		System.out.println("travel found with findAll():");
-		System.out.println("-------------------------------");
-		for (Trajet trajet : repository.findAll()) {
-			System.out.println(trajet);
-		}
-	}
-
 }
